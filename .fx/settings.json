@@ -1,0 +1,22 @@
+{
+    "appName": "raincomeprbot",
+    "projectId": "7451479c-d354-4e12-a70f-2890ee83ea94",
+    "solutionSettings": {
+        "name": "fx-solution-azure",
+        "version": "1.0.0",
+        "hostType": "Azure",
+        "azureResources": [],
+        "capabilities": [
+            "Bot"
+        ],
+        "activeResourcePlugins": [
+            "fx-resource-bot",
+            "fx-resource-aad-app-for-teams",
+            "fx-resource-local-debug",
+            "fx-resource-appstudio"
+        ]
+    },
+    "version": "1.0.0",
+    "isFromSample": false,
+    "programmingLanguage": "javascript"
+}

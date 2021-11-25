@@ -1,0 +1,17 @@
+{
+    "name": "raincomeprbot",
+    "version": "0.0.1",
+    "description": "",
+    "author": "",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "@microsoft/teamsfx-cli": "0.*"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.24.0",
+        "botframework-connector": "^4.14.1"
+    }
+}
