@@ -20,6 +20,7 @@ class ConversationHandler {
             // PromptedUserForName
             var sss = new ConversationModel('', '', '', '', '');
 
+
             const result = await sql.query`select * from mytable where id = ${value}`
             console.dir(result)
         } catch (err) {
