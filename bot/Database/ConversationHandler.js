@@ -13,12 +13,9 @@ class ConversationHandler {
      */
     async InsertConversation(conversationObject, email = '') {
         try {
-            await sql.connect(connection_string);
+            // await sql.connect(connection_string);
 
-            // Name
-            // Timestamp
-            // ChannelId
-            // PromptedUserForName
+            console.log("dd");
             var sss = new ConversationModel(email);
 
             sss.setConversationObject(
@@ -31,6 +28,8 @@ class ConversationHandler {
                 conversationObject.user.aadObjectId,
                 conversationObject.user.name
             );
+
+            return;
 
             let query = `
                 INSERT INTO Conversations
@@ -50,9 +49,33 @@ class ConversationHandler {
         }
     }
 
-    async GetUserConversation(userId) {
+    async GetUserConversation(UserAADId) {
         try {
             await sql.connect(connection_string);
+
+            let query = `
+                SELECT
+                    *
+                FROM Conversations
+                WHERE UserAADId = '${UserAADId}'
+            `;
+
+            const result = await sql.query(query);
+        } catch (err) {
+            // ... error checks
+        }
+    }
+
+    async UpdatetUserConversation(UserAADId) {
+        try {
+            await sql.connect(connection_string);
+
+            let query = `
+                SELECT
+                    *
+                FROM Conversations
+                WHERE UserAADId = '${UserAADId}'
+            `;
 
             const result = await sql.query`select * from mytable where id = ${value}`
             console.dir(result)
