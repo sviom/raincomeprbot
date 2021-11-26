@@ -1,4 +1,5 @@
 const sql = require('mssql');
+const ConversationModel = require('./ConversationModel');
 const connection_string = 'Server=tcp:todaylunch.database.windows.net,1433;Initial Catalog=riaincome_noti_bot;Persist Security Info=False;User ID=lunchadmin;Password=0vnrvjwuTek!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;';
 
 /**
@@ -12,6 +13,12 @@ class ConversationHandler {
     async InsertConversation(conversationObject) {
         try {
             await sql.connect(connection_string);
+
+            // Name
+            // Timestamp
+            // ChannelId
+            // PromptedUserForName
+            var sss = new ConversationModel('', '', '', '');
 
             const result = await sql.query`select * from mytable where id = ${value}`
             console.dir(result)
