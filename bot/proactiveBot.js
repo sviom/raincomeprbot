@@ -5,21 +5,14 @@ class ProactiveBot extends ActivityHandler {
     constructor(conversationReferences) {
         super();
         this.conversationReferences = conversationReferences;
+
         this.onConversationUpdate(async (context, next) => {
-            console.log("dddd");
             this.addConversationReference(context.activity);
         });
 
-        this.onMessageActivity(async (context, next) => {
-            console.log("onMessageActivity");
-            this.addConversationReference(context.activity);
-        })
-
         this.onMembersAdded(async (context, next) => {
             const membersAdded = context.activity.membersAdded;
-            console.log("on member added ");
             for (let cnt = 0; cnt < membersAdded.length; cnt++) {
-                console.log("member added conversation check");
                 if (membersAdded[cnt].id !== context.activity.recipient.id) {
                     this.addConversationReference(context.activity);
                 }
@@ -30,7 +23,6 @@ class ProactiveBot extends ActivityHandler {
         this.onMessage(async (context, next) => {
             TurnContext.removeRecipientMention(context.activity);
             const text = context.activity.text.trim().toLocaleLowerCase();
-            console.log("onMessage");
             if (text.includes('install')) {
                 await this.InstallAppInTeamsAndChatMembersPersonalScope(context);
             } else if (text.includes('send')) {
@@ -88,11 +80,8 @@ class ProactiveBot extends ActivityHandler {
     }
 
     addConversationReference(activity) {
-        console.log("addConversationReference1");
         const conversationReference = TurnContext.getConversationReference(activity);
-
         const userId = conversationReference.user.aadObjectId;
-        console.log("addConversationReference2");
         if (!this.conversationReferences[userId])
             this.conversationReferences[userId] = conversationReference;
     }

@@ -16,17 +16,6 @@ const { ProactiveBot } = require('./proactiveBot');
 const ProactiveAppIntallationHelper = require('./ProactiveAppIntallationHelper');
 const axios = require("axios");
 
-const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
-    MicrosoftAppId: process.env.BOT_ID,
-    MicrosoftAppPassword: process.env.BOT_PASSWORD,
-    MicrosoftAppType: process.env.MicrosoftAppType,
-    MicrosoftAppTenantId: process.env.MicrosoftAppTenantId
-});
-
-const botFrameworkAuthentication = createBotFrameworkAuthenticationFromConfiguration(null, credentialsFactory);
-
-const cloudAdapter = new CloudAdapter(botFrameworkAuthentication);
-
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const adapter = new BotFrameworkAdapter({
@@ -34,16 +23,11 @@ const adapter = new BotFrameworkAdapter({
     appPassword: process.env.BOT_PASSWORD,
 });
 
-
 // 봇 프레임워크 커넥터로 연결
 const BotConnector = require("botframework-connector");
 const credentials = new BotConnector.MicrosoftAppCredentials(
     process.env.BOT_ID,
     process.env.BOT_PASSWORD,
-);
-
-BotConnector.MicrosoftAppCredentials.trustServiceUrl(
-    "https://smba.trafficmanager.net/amer"
 );
 
 adapter.onTurnError = async (context, error) => {
@@ -73,11 +57,8 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 
 // Listen for incoming requests.
 server.post("/api/messages", async (req, res) => {
-    console.log("start bot");
     await adapter.processActivity(req, res, async (context) => {
-        console.log("get conversation");
         await bot.run(context);
-        // bot.addConversationReference(context.activity);
     });
 });
 
@@ -87,7 +68,7 @@ server.get('/api/notify', async (req, res) => {
     const bot_id = "20343e66-49b0-4955-9d26-b3ab1255d26d";
     const tenant_id = "2f73c339-0881-4953-93ec-9379c837f5a3";
     const user_id = "57ba0d68-0e3f-44ac-9272-127cb2496043";
-    const message = MessageFactory.text("hhhhhhhhhhlelllo");
+    const message = MessageFactory.text("PR이 발생했습니다!");
 
 
     const conversationParameters = {
@@ -110,22 +91,15 @@ server.get('/api/notify', async (req, res) => {
     };
 
     try {
-
         const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
-        console.log("response ");
-
         const response = await connectorClient.conversations.createConversation(conversationParameters);
-        console.log("response ");
         const result = await connectorClient.conversations.sendToConversation(response.id, message);
-
-        console.log("test");
-
     } catch (error) {
         console.log(error);
     }
 
     res.send("Message sent");
-    next();
+    return;
 });
 
 // Gracefully shutdown HTTP server
