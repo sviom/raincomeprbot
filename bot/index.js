@@ -5,13 +5,9 @@ const restify = require("restify");
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
-const { BotFrameworkAdapter,
-    ConfigurationServiceClientCredentialFactory,
-    createBotFrameworkAuthenticationFromConfiguration,
-    CloudAdapter,
-    MessageFactory
-} = require("botbuilder");
+const { BotFrameworkAdapter, MessageFactory } = require("botbuilder");
 const { ProactiveBot } = require('./BotHandler/proactiveBot');
+const ConversationHandler = require("./Database/ConversationHandler");
 
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
@@ -48,6 +44,7 @@ const server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log(`\nBot started, ${server.name} listening to ${server.url}`);
 });
+server.use(restify.plugins.queryParser());      // query string 자동 파서
 
 // Listen for incoming requests.
 server.post("/api/messages", async (req, res) => {
@@ -56,47 +53,30 @@ server.post("/api/messages", async (req, res) => {
     });
 });
 
+// const tenant_id = "2f73c339-0881-4953-93ec-9379c837f5a3";
+// const user_id = "57ba0d68-0e3f-44ac-9272-127cb2496043";
 // Listen for incoming notifications and send proactive messages to users.
 server.get('/api/notify', async (req, res) => {
-    // DB에서 conversation 있나 확인
+    const { user_id } = req.query;
 
-    // 있으면 해당 conversation 으로 진행
-
-    // 없으면 시작
-
-
-
-    const bot_id = "20343e66-49b0-4955-9d26-b3ab1255d26d";
-    const tenant_id = "2f73c339-0881-4953-93ec-9379c837f5a3";
-    const user_id = "57ba0d68-0e3f-44ac-9272-127cb2496043";
-    const message = MessageFactory.text("PR이 발생했습니다!");
-
-
-    const conversationParameters = {
-        isGroup: false,
-        channelData: {
-            tenant: {
-                id: tenant_id
-            }
-        },
-        bot: {
-            id: "28:20343e66-49b0-4955-9d26-b3ab1255d26d",
-            name: "raincomeprbot-local-debug"
-        },
-        members: [
-            {
-                id: "29:1K8i1iYCl-lBIDtewgNgX7JFolxmpi_YMI37vhi99gB3BfWQzTXvvUygUL9BNqGzkWdPcuTnEZ1fI4kG9j2kw9g",
-                name: '강한별'
-            }
-        ]
-    };
+    if (!user_id) {
+        res.send("err");
+        return;
+    }
 
     try {
-        const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
-        const response = await connectorClient.conversations.createConversation(conversationParameters);
-        const result = await connectorClient.conversations.sendToConversation(response.id, message);
+        // DB에서 conversation 있나 확인
+        const handler = new ConversationHandler();
+        const getResult = await handler.GetUserConversation(user_id);
+        if (getResult.length > 0) {
+            const conversation_id = getResult.data.conversation.id;
+            const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
+            // const response = await connectorClient.conversations.createConversation(conversationParameters);
+            // conversation_id = response.id 임
+            const result = await connectorClient.conversations.sendToConversation(conversation_id, MessageFactory.text("PR이 발생했습니다!"));
+        }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 
     res.send("Message sent");
