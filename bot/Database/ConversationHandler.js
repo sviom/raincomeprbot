@@ -72,6 +72,15 @@ class ConversationHandler {
      * @returns 배열
      */
     async GetUserConversation(UserAADId) {
+        let returnObject = {
+            /**
+             * @type {ConversationModel}
+             */
+            data: {},
+            /** 갯수 */
+            length: 0
+        }
+
         try {
             await sql.connect(connection_string);
 
@@ -83,15 +92,27 @@ class ConversationHandler {
             `;
 
             const result = await sql.query(query);
-
             const queryResult = result.recordset;
-            console.log("dd");
-            return queryResult;
+            if (queryResult.length > 0) {
+                const userConversation = queryResult[0];
+                let model = new ConversationModel();
+                model.bot.id = userConversation.BotId;
+                model.bot.name = userConversation.BotName;
+                model.user.id = userConversation.UserId;
+                model.user.aadObjectId = userConversation.UserAADId;
+                model.user.name = userConversation.UserName;
+                model.conversation.id = userConversation.ConversationId;
+                model.conversation.conversationType = userConversation.ConversationType;
+                model.email = userConversation.Email;
+
+                returnObject.data = model;
+            }
+            returnObject.length = queryResult.length;
         } catch (err) {
             // ... error checks
             console.error(err);
-            return [];
         }
+        return returnObject;
     }
 
     /**
