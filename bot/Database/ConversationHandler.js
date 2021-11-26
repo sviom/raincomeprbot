@@ -9,8 +9,9 @@ class ConversationHandler {
     /**
      * DB에 저장
      * @param {Object} conversationObject conversation 정보 통째로
+     * @param {String} email 사용자 이메일 정보
      */
-    async InsertConversation(conversationObject) {
+    async InsertConversation(conversationObject, email = '') {
         try {
             await sql.connect(connection_string);
 
@@ -18,10 +19,31 @@ class ConversationHandler {
             // Timestamp
             // ChannelId
             // PromptedUserForName
-            var sss = new ConversationModel('', '', '', '', '');
+            var sss = new ConversationModel(email);
 
+            sss.setConversationObject(
+                conversationObject.bot.id,
+                conversationObject.bot.name,
+                conversationObject.conversation.conversationType,
+                conversationObject.conversation.id,
+                conversationObject.conversation.tenantId,
+                conversationObject.user.id,
+                conversationObject.user.aadObjectId,
+                conversationObject.user.name
+            );
 
-            const result = await sql.query`select * from mytable where id = ${value}`
+            let query = `
+                INSERT INTO Conversations
+                (BotId, BotName, ConversationType, ConversationId, UserId, UserAADId, UserName, Email)
+                VALUES
+                (
+                    '${sss.bot.id}', '${sss.bot.name}',
+                    '${sss.conversation.conversationType}', '${sss.conversation.id}',
+                    '${sss.user.id}', '${sss.user.aadObjectId}', '${sss.user.name}',
+                    'Email'
+                );
+            `;
+            const result = await sql.query(query);
             console.dir(result)
         } catch (err) {
             // ... error checks

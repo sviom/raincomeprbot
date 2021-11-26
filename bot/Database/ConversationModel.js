@@ -1,11 +1,12 @@
-
 class ConversationModel {
-    constructor(email, name, timestamp, channelId, promptedUserForName) {
+    /**
+     * @param {String} email 사용자 이메일 정보
+     */
+    constructor(email) {
         this.email = email;
-        this.Name = name;
-        this.timestamp = timestamp;
-        this.channelId = channelId;
-        this.promptedUserForName = promptedUserForName;
+        this.timestamp = new Date();
+        // this.channelId = channelId;
+        // this.promptedUserForName = promptedUserForName;
 
         /** 봇 정보 */
         this.bot = {
