@@ -13,12 +13,10 @@ class ConversationHandler {
      */
     async InsertConversation(conversationObject, email = '') {
         try {
-            // await sql.connect(connection_string);
+            await sql.connect(connection_string);
 
-            console.log("dd");
-            var sss = new ConversationModel(email);
-
-            sss.setConversationObject(
+            var conversationModel = new ConversationModel(email);
+            conversationModel.setConversationObject(
                 conversationObject.bot.id,
                 conversationObject.bot.name,
                 conversationObject.conversation.conversationType,
@@ -29,26 +27,33 @@ class ConversationHandler {
                 conversationObject.user.name
             );
 
-            return;
-
-            let query = `
-                INSERT INTO Conversations
-                (BotId, BotName, ConversationType, ConversationId, UserId, UserAADId, UserName, Email)
-                VALUES
-                (
-                    '${sss.bot.id}', '${sss.bot.name}',
-                    '${sss.conversation.conversationType}', '${sss.conversation.id}',
-                    '${sss.user.id}', '${sss.user.aadObjectId}', '${sss.user.name}',
-                    'Email'
-                );
-            `;
-            const result = await sql.query(query);
-            console.dir(result)
+            const getResult = await this.GetUserConversation(conversationModel.user.aadObjectId);
+            if (getResult.length <= 0) {
+                let query = `
+                    INSERT INTO Conversations
+                    (BotId, BotName, ConversationType, ConversationId, UserId, UserAADId, UserName, Email)
+                    VALUES
+                    (
+                        '${conversationModel.bot.id}', '${conversationModel.bot.name}',
+                        '${conversationModel.conversation.conversationType}', '${conversationModel.conversation.id}',
+                        '${conversationModel.user.id}', '${conversationModel.user.aadObjectId}', '${conversationModel.user.name}',
+                        'Email'
+                    );
+                `;
+                const result = await sql.query(query);
+            } else {
+                await this.UpdatetUserConversation(conversationModel);
+            }
         } catch (err) {
-            // ... error checks
+            console.log("err");
         }
     }
 
+    /**
+     *
+     * @param {string} UserAADId Azure aad guid
+     * @returns 배열
+     */
     async GetUserConversation(UserAADId) {
         try {
             await sql.connect(connection_string);
@@ -61,26 +66,40 @@ class ConversationHandler {
             `;
 
             const result = await sql.query(query);
+
+            const queryResult = result.recordset;
+            console.log("dd");
+            return queryResult;
         } catch (err) {
             // ... error checks
+            console.error(err);
+            return [];
         }
     }
 
-    async UpdatetUserConversation(UserAADId) {
+    /**
+     * 업데이트
+     * @param {ConversationModel} conversationObject
+     */
+    async UpdatetUserConversation(conversationObject) {
         try {
             await sql.connect(connection_string);
 
             let query = `
-                SELECT
-                    *
-                FROM Conversations
-                WHERE UserAADId = '${UserAADId}'
+                UPDATE Conversations
+                SET
+                    BotId = '${conversationObject.bot.id}',
+                    BotName = '${conversationObject.bot.name}',
+                    ConversationType = '${conversationObject.conversation.conversationType}',
+                    ConversationId = '${conversationObject.conversation.id}',
+                    UserId = '${conversationObject.user.id}',
+                    UserName = '${conversationObject.user.name}'
+                WHERE UserAADId = '${conversationObject.user.aadObjectId}'
             `;
 
-            const result = await sql.query`select * from mytable where id = ${value}`
-            console.dir(result)
+            const result = await sql.query(query);
         } catch (err) {
-            // ... error checks
+            console.error("update error : ", err);
         }
     }
 }

@@ -9,7 +9,7 @@ class ProactiveBot extends ActivityHandler {
         this.conversationReferences = conversationReferences;
 
         this.onConversationUpdate(async (context, next) => {
-            this.addConversationReference(context.activity);
+            await this.addConversationReference(context.activity);
         });
 
         this.onMembersAdded(async (context, next) => {
@@ -17,7 +17,7 @@ class ProactiveBot extends ActivityHandler {
             console.log("member added : ", membersAdded);
             for (let cnt = 0; cnt < membersAdded.length; cnt++) {
                 if (membersAdded[cnt].id !== context.activity.recipient.id) {
-                    this.addConversationReference(context.activity);
+                    await this.addConversationReference(context.activity);
                 }
             }
             await next();
@@ -30,6 +30,8 @@ class ProactiveBot extends ActivityHandler {
                 await this.InstallAppInTeamsAndChatMembersPersonalScope(context);
             } else if (text.includes('send')) {
                 await this.SendNotificationToUsersAsync(context);
+            } else {
+                await this.addConversationReference(context.activity);
             }
         });
     }
@@ -82,7 +84,7 @@ class ProactiveBot extends ActivityHandler {
         await context.sendActivity(MessageFactory.text("Message sent:"));
     }
 
-    addConversationReference(activity) {
+    async addConversationReference(activity) {
         const conversationReference = TurnContext.getConversationReference(activity);
         const userId = conversationReference.user.aadObjectId;
         if (!this.conversationReferences[userId])
@@ -91,7 +93,7 @@ class ProactiveBot extends ActivityHandler {
         fs.writeFile(`./converstaion_${userId}.txt`, JSON.stringify(conversationReference), (error) => {
             console.log("error : ", error);
         });
-        // DB에 넣기 추가
+
         const handler = new ConversationHandler();
         await handler.InsertConversation(conversationReference);
     }
