@@ -47,28 +47,6 @@ class ConversationModel {
         this.user.aadObjectId = user_object_id;
         this.user.name = user_name;
     }
-
-    getConversationParameter() {
-        return {
-            /** dfd */
-            isGroup: false,
-            channelData: {
-                tenant: {
-                    id: tenant_id
-                }
-            },
-            bot: {
-                id: "28:20343e66-49b0-4955-9d26-b3ab1255d26d",
-                name: "raincomeprbot-local-debug"
-            },
-            members: [
-                {
-                    id: "29:1K8i1iYCl-lBIDtewgNgX7JFolxmpi_YMI37vhi99gB3BfWQzTXvvUygUL9BNqGzkWdPcuTnEZ1fI4kG9j2kw9g",
-                    name: '강한별'
-                }
-            ]
-        };
-    }
 }
 
 module.exports = ConversationModel
