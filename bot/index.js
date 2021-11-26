@@ -11,10 +11,7 @@ const { BotFrameworkAdapter,
     CloudAdapter,
     MessageFactory
 } = require("botbuilder");
-const { TeamsBot } = require("./teamsBot");
-const { ProactiveBot } = require('./proactiveBot');
-const ProactiveAppIntallationHelper = require('./ProactiveAppIntallationHelper');
-const axios = require("axios");
+const { ProactiveBot } = require('./BotHandler/proactiveBot');
 
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.

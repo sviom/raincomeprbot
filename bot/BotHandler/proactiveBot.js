@@ -1,7 +1,7 @@
 const { ActivityHandler, TurnContext, TeamsInfo, MessageFactory } = require('botbuilder');
-var ProactiveAppIntallationHelper = require('./ProactiveAppIntallationHelper');
+var ProactiveAppIntallationHelper = require('../Helper/ProactiveAppIntallationHelper');
 const fs = require("fs");
-const ConversationHandler = require("./Database/ConversationHandler");
+const ConversationHandler = require("../Database/ConversationHandler");
 
 class ProactiveBot extends ActivityHandler {
     constructor(conversationReferences) {

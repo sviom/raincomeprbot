@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const ConversationModel = require('./ConversationModel');
+const ConversationModel = require('../Models/ConversationModel');
 const connection_string = 'Server=tcp:todaylunch.database.windows.net,1433;Initial Catalog=riaincome_noti_bot;Persist Security Info=False;User ID=lunchadmin;Password=0vnrvjwuTek!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;';
 
 /**
@@ -57,13 +57,12 @@ class ConversationHandler {
 
                 request.query(query, (err, result) => {
                     console.dir(result)
-                })
-
+                });
             } else {
                 await this.UpdatetUserConversation(conversationModel);
             }
         } catch (err) {
-            console.log("err");
+            console.error("insert error : ", err)
         }
     }
 
@@ -130,9 +129,7 @@ class ConversationHandler {
 
             request.query(query, (err, result) => {
                 console.dir(result)
-            })
-
-            const result = await sql.query(query);
+            });
         } catch (err) {
             console.error("update error : ", err);
         }

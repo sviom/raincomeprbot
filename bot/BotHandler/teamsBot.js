@@ -2,8 +2,8 @@ const { TeamsActivityHandler, CardFactory, TurnContext, TeamsInfo,
     ActionTypes,
     Channels,
     MessageFactory } = require("botbuilder");
-const rawWelcomeCard = require("./adaptiveCards/welcome.json");
-const rawLearnCard = require("./adaptiveCards/learn.json");
+const rawWelcomeCard = require("../adaptiveCards/welcome.json");
+const rawLearnCard = require("../adaptiveCards/learn.json");
 const ACData = require("adaptivecards-templating");
 
 class TeamsBot extends TeamsActivityHandler {
