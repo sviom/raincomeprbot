@@ -11,7 +11,7 @@ class ConversationHandler {
      * @param {Object} conversationObject conversation 정보 통째로
      * @param {String} email 사용자 이메일 정보
      */
-    async InsertConversation(conversationObject, email = '') {
+    async InsertConversation(conversationObject, email = null) {
         try {
             await sql.connect(connection_string);
 
@@ -34,13 +34,31 @@ class ConversationHandler {
                     (BotId, BotName, ConversationType, ConversationId, UserId, UserAADId, UserName, Email)
                     VALUES
                     (
-                        '${conversationModel.bot.id}', '${conversationModel.bot.name}',
-                        '${conversationModel.conversation.conversationType}', '${conversationModel.conversation.id}',
-                        '${conversationModel.user.id}', '${conversationModel.user.aadObjectId}', '${conversationModel.user.name}',
-                        'Email'
+                        @BotId,
+                        @BotName,
+                        @ConversationType,
+                        @ConversationId,
+                        @UserId,
+                        @UserAADId,
+                        @UserName,
+                        @Email
                     );
                 `;
-                const result = await sql.query(query);
+
+                const request = new sql.Request();
+                request.input('BotId', sql.NVarChar(300), conversationObject.bot.id);
+                request.input('BotName', sql.NVarChar(100), conversationObject.bot.name);
+                request.input('ConversationType', sql.NVarChar(50), conversationObject.conversation.conversationType);
+                request.input('ConversationId', sql.NVarChar(300), conversationObject.conversation.id);
+                request.input('UserId', sql.NVarChar(300), conversationObject.user.id);
+                request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
+                request.input('UserName', sql.NVarChar(200), conversationObject.user.name);
+                request.input('Email', sql.NVarChar(100), email);
+
+                request.query(query, (err, result) => {
+                    console.dir(result)
+                })
+
             } else {
                 await this.UpdatetUserConversation(conversationModel);
             }
@@ -81,21 +99,38 @@ class ConversationHandler {
      * 업데이트
      * @param {ConversationModel} conversationObject
      */
-    async UpdatetUserConversation(conversationObject) {
+    async UpdatetUserConversation(conversationObject, email = null) {
         try {
             await sql.connect(connection_string);
 
             let query = `
                 UPDATE Conversations
                 SET
-                    BotId = '${conversationObject.bot.id}',
-                    BotName = '${conversationObject.bot.name}',
-                    ConversationType = '${conversationObject.conversation.conversationType}',
-                    ConversationId = '${conversationObject.conversation.id}',
-                    UserId = '${conversationObject.user.id}',
-                    UserName = '${conversationObject.user.name}'
-                WHERE UserAADId = '${conversationObject.user.aadObjectId}'
+                    BotId = @BotId,
+                    BotName = @BotName,
+                    ConversationType = @ConversationType,
+                    ConversationId = @ConversationId,
+                    UserId = @UserId,
+                    UserName = @UserName,
+                    Email = @Email,
+                    UpdatedTime = @UpdatedTime
+                WHERE UserAADId = @UserAADId
             `;
+
+            const request = new sql.Request();
+            request.input('BotId', sql.NVarChar(300), conversationObject.bot.id);
+            request.input('BotName', sql.NVarChar(100), conversationObject.bot.name);
+            request.input('ConversationType', sql.NVarChar(50), conversationObject.conversation.conversationType);
+            request.input('ConversationId', sql.NVarChar(300), conversationObject.conversation.id);
+            request.input('UserId', sql.NVarChar(300), conversationObject.user.id);
+            request.input('UserName', sql.NVarChar(200), conversationObject.user.name);
+            request.input('Email', sql.NVarChar(100), email);
+            request.input('UpdatedTime', sql.DateTime, new Date());
+            request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
+
+            request.query(query, (err, result) => {
+                console.dir(result)
+            })
 
             const result = await sql.query(query);
         } catch (err) {
