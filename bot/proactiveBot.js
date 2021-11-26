@@ -1,6 +1,7 @@
 const { ActivityHandler, TurnContext, TeamsInfo, MessageFactory } = require('botbuilder');
 var ProactiveAppIntallationHelper = require('./ProactiveAppIntallationHelper');
 const fs = require("fs");
+const ConversationHandler = require("./Database/ConversationHandler");
 
 class ProactiveBot extends ActivityHandler {
     constructor(conversationReferences) {
@@ -87,9 +88,12 @@ class ProactiveBot extends ActivityHandler {
         if (!this.conversationReferences[userId])
             this.conversationReferences[userId] = conversationReference;
 
-        fs.writeFile(`./converstaion_${userId}.txt`, conversationReference, (error) => {
+        fs.writeFile(`./converstaion_${userId}.txt`, JSON.stringify(conversationReference), (error) => {
             console.log("error : ", error);
         });
+        // DB에 넣기 추가
+        const handler = new ConversationHandler();
+        await handler.InsertConversation(conversationReference);
     }
 }
 module.exports.ProactiveBot = ProactiveBot;

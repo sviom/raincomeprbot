@@ -42,10 +42,7 @@ adapter.onTurnError = async (context, error) => {
     await context.sendActivity("To continue to run this bot, please fix the bot source code.");
 };
 
-// Create the bot that will handle incoming messages.
-// const bot = new TeamsBot();
-
-// Create the main dialog.
+// 봇 시작
 const conversationReferences = {};
 const bot = new ProactiveBot(conversationReferences);
 
@@ -64,6 +61,13 @@ server.post("/api/messages", async (req, res) => {
 
 // Listen for incoming notifications and send proactive messages to users.
 server.get('/api/notify', async (req, res) => {
+    // DB에서 conversation 있나 확인
+
+    // 있으면 해당 conversation 으로 진행
+
+    // 없으면 시작
+
+
 
     const bot_id = "20343e66-49b0-4955-9d26-b3ab1255d26d";
     const tenant_id = "2f73c339-0881-4953-93ec-9379c837f5a3";
