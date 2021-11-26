@@ -1,5 +1,6 @@
 const { ActivityHandler, TurnContext, TeamsInfo, MessageFactory } = require('botbuilder');
 var ProactiveAppIntallationHelper = require('./ProactiveAppIntallationHelper');
+const fs = require("fs");
 
 class ProactiveBot extends ActivityHandler {
     constructor(conversationReferences) {
@@ -12,6 +13,7 @@ class ProactiveBot extends ActivityHandler {
 
         this.onMembersAdded(async (context, next) => {
             const membersAdded = context.activity.membersAdded;
+            console.log("member added : ", membersAdded);
             for (let cnt = 0; cnt < membersAdded.length; cnt++) {
                 if (membersAdded[cnt].id !== context.activity.recipient.id) {
                     this.addConversationReference(context.activity);
@@ -84,6 +86,10 @@ class ProactiveBot extends ActivityHandler {
         const userId = conversationReference.user.aadObjectId;
         if (!this.conversationReferences[userId])
             this.conversationReferences[userId] = conversationReference;
+
+        fs.writeFile(`./converstaion_${userId}.txt`, conversationReference, (error) => {
+            console.log("error : ", error);
+        });
     }
 }
 module.exports.ProactiveBot = ProactiveBot;
