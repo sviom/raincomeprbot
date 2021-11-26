@@ -1,7 +1,14 @@
-const { ActivityHandler, TurnContext, TeamsInfo, MessageFactory } = require('botbuilder');
+const { ActivityHandler, TurnContext, TeamsInfo, MessageFactory, CardFactory } = require('botbuilder');
+// const { TeamsActivityHandler, CardFactory, TurnContext, TeamsInfo,
+//     ActionTypes,
+//     Channels,
+//     MessageFactory } = require("botbuilder");
 var ProactiveAppIntallationHelper = require('../Helper/ProactiveAppIntallationHelper');
 const fs = require("fs");
 const ConversationHandler = require("../Database/ConversationHandler");
+const rawWelcomeCard = require("../adaptiveCards/welcome.json");
+const rawLearnCard = require("../adaptiveCards/learn.json");
+const ACData = require("adaptivecards-templating");
 
 class ProactiveBot extends ActivityHandler {
     constructor(conversationReferences) {
@@ -20,6 +27,11 @@ class ProactiveBot extends ActivityHandler {
                     await this.addConversationReference(context.activity);
                 }
             }
+
+            // 최초 사용자에게 웰컴 메시지 보내기
+            const card = this.renderAdaptiveCard(rawWelcomeCard);
+            await context.sendActivity({ attachments: [card] });
+
             await next();
         });
 
@@ -82,6 +94,14 @@ class ProactiveBot extends ActivityHandler {
             });
         });
         await context.sendActivity(MessageFactory.text("Message sent:"));
+    }
+
+    // Bind AdaptiveCard with data
+    renderAdaptiveCard(rawCardTemplate, dataObj) {
+        const cardTemplate = new ACData.Template(rawCardTemplate);
+        const cardWithData = cardTemplate.expand({ $root: dataObj });
+        const card = CardFactory.adaptiveCard(cardWithData);
+        return card;
     }
 
     async addConversationReference(activity) {
