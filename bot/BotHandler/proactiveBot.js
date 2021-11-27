@@ -46,6 +46,10 @@ class ProactiveBot extends ActivityHandler {
                 await this.addConversationReference(context.activity);
             }
         });
+
+        this.onInstallationUpdate(async (context, next) => {
+            await this.addConversationReference(context.activity);
+        });
     }
 
     async InstallAppInTeamsAndChatMembersPersonalScope(context) {
