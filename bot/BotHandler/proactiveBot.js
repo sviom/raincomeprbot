@@ -42,9 +42,13 @@ class ProactiveBot extends ActivityHandler {
                 await this.InstallAppInTeamsAndChatMembersPersonalScope(context);
             } else if (text.includes('send')) {
                 await this.SendNotificationToUsersAsync(context);
-            } else {
-                await this.addConversationReference(context.activity);
             }
+
+
+            // 아무 텍스트나 들어와도 안내메시지 보내기 및 Conversation Update
+            const card = this.renderAdaptiveCard(rawLearnCard);
+            await context.sendActivity({ attachments: [card] });
+            await this.addConversationReference(context.activity);
         });
 
         this.onInstallationUpdate(async (context, next) => {
