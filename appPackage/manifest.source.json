@@ -42,12 +42,8 @@
                     ],
                     "commands": [
                         {
-                            "title": "welcome",
-                            "description": "Resend welcome card of this Bot"
-                        },
-                        {
-                            "title": "learn",
-                            "description": "Learn about Adaptive Card and Bot Command"
+                            "title": "아무거나 입력하세요!",
+                            "description": "아무거나 입력하시면 됩니다."
                         }
                     ]
                 }
