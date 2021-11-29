@@ -1,0 +1,76 @@
+{
+    "eventKey": "repo:refschanged",
+    "date": "2021-01-19T11:35:29+0900",
+    "actor": {
+        "name": "hanbyulkang",
+        "emailAddress": "hanbyulkang@jinhak.com",
+        "id": 276,
+        "displayName": "강 한별",
+        "active": true,
+        "slug": "hanbyulkang",
+        "type": "NORMAL",
+        "links": {
+            "self": [
+                {
+                    "href": "http://bitbucket.jinhaksa.net:7990/users/hanbyulkang"
+                }
+            ]
+        }
+    },
+    "repository": {
+        "slug": "pullrequesttest",
+        "id": 97,
+        "name": "pullrequesttest",
+        "description": "Pull Request 테스트용 Repository",
+        "scmId": "git",
+        "state": "AVAILABLE",
+        "statusMessage": "Available",
+        "forkable": true,
+        "project": {
+            "key": "CATCH",
+            "id": 10,
+            "name": "catch",
+            "description": "catch.co.kr 관련 프로젝트",
+            "public": false,
+            "type": "NORMAL",
+            "links": {
+                "self": [
+                    {
+                        "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH"
+                    }
+                ]
+            }
+        },
+        "public": false,
+        "links": {
+            "clone": [
+                {
+                    "href": "http://bitbucket.jinhaksa.net:7990/scm/catch/pullrequesttest.git",
+                    "name": "http"
+                },
+                {
+                    "href": "ssh://git@bitbucket.jinhaksa.net:7999/catch/pullrequesttest.git",
+                    "name": "ssh"
+                }
+            ],
+            "self": [
+                {
+                    "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH/repos/pullrequesttest/browse"
+                }
+            ]
+        }
+    },
+    "changes": [
+        {
+            "ref": {
+                "id": "refs/heads/feature/reviewertest",
+                "displayId": "feature/reviewertest",
+                "type": "BRANCH"
+            },
+            "refId": "refs/heads/feature/reviewertest",
+            "fromHash": "466dec851b0f6123065fe8e19a3054c3c67425cb",
+            "toHash": "c358d10207e5556ecad79d77baa59536cd2fb0e7",
+            "type": "UPDATE"
+        }
+    ]
+}

@@ -56,29 +56,53 @@ server.post("/api/messages", async (req, res) => {
 // const tenant_id = "2f73c339-0881-4953-93ec-9379c837f5a3";
 // const user_id = "57ba0d68-0e3f-44ac-9272-127cb2496043";
 // Listen for incoming notifications and send proactive messages to users.
-server.get('/api/notify', async (req, res) => {
+server.post('/api/notify', async (req, res) => {
     const { user_email } = req.query;
+    const rawBody = req.body;
 
-    if (!user_email) {
-        res.send("err");
+    // if (!user_email) {
+    //     res.send("err");
+    //     return;
+    // }
+
+    const actorEmail = rawBody.actor ? rawBody.actor.emailAddress : '';
+    if (!actorEmail)
         return;
-    }
 
-    try {
-        // DB에서 conversation 있나 확인
-        const handler = new ConversationHandler();
-        const getResult = await handler.GetUserConversation(user_email);
-        if (getResult.length > 0) {
-            const conversation_id = getResult.data.conversation.id;
-            const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
-            // const response = await connectorClient.conversations.createConversation(conversationParameters);
-            // conversation_id = response.id 임
-            const result = await connectorClient.conversations.sendToConversation(conversation_id, MessageFactory.text("PR이 발생했습니다!"));
+    const prTitle = rawBody.pullRequest.title;
+    const prDescription = rawBody.pullRequest.description;
+    const reviewers = rawBody.pullRequest.reviewers;
+    const prLink = rawBody.pullRequest.links.self[0].href;
+    const rawNotificationCard = require("./adaptiveCards/prNotification.json");
+
+    if (!Array.isArray(reviewers))
+        return;
+
+    for (let index = 0; index < reviewers.length; index++) {
+        const element = reviewers[index];
+        const reviewerEmail = element.user.emailAddress;
+
+        try {
+            const handler = new ConversationHandler();      // DB에서 conversation 있나 확인
+            const getResult = await handler.GetUserConversation(reviewerEmail);
+            if (getResult.length == 1) {
+                const conversation_id = getResult.data.conversation.id;
+                const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
+                // const response = await connectorClient.conversations.createConversation(conversationParameters);
+
+                const card = bot.renderAdaptiveCard(rawNotificationCard);
+                card.body[0].text = prTitle;
+                card.body[1].text = prDescription;
+                card.actions[0].url = prLink;
+
+                // conversation_id = response.id 임
+                // MessageFactory.text("PR이 발생했습니다!")
+                const result = await connectorClient.conversations.sendToConversation(conversation_id, { attachments: [card] });
+            }
+        } catch (error) {
+            console.error(error);
         }
-    } catch (error) {
-        console.error(error);
     }
-
     res.send("Message sent");
     return;
 });
