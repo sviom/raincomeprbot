@@ -77,7 +77,7 @@ server.post('/api/notify', async (req, res) => {
     const prTitle = rawPullRequest.title;
     const prDescription = rawPullRequest.description;
     const reviewers = rawPullRequest.reviewers;
-    const prLink = rawPullRequest.links.self[0].href;
+    let prLink = rawPullRequest.links.self[0].href.toString();
 
     if (!Array.isArray(reviewers))
         return res.send(404, { message: 'No reviewers' });
@@ -97,6 +97,9 @@ server.post('/api/notify', async (req, res) => {
                 let rawNotificationCard = require("./adaptiveCards/prNotification.json");
                 rawNotificationCard.body[0].text = prTitle;
                 rawNotificationCard.body[1].text = prDescription;
+
+                prLink = prLink.replace("bitbucket.jinhaksa.net", "10.1.4.71");
+
                 rawNotificationCard.actions[0].url = prLink;
 
                 // conversation_id = response.id 임
