@@ -31,7 +31,7 @@ class ConversationHandler {
             if (getResult.length <= 0) {
                 let query = `
                     INSERT INTO Conversations
-                    (BotId, BotName, ConversationType, ConversationId, UserId, UserAADId, UserName, Email)
+                    (BotId, BotName, ConversationType, ConversationId, UserId, UserName, Email)
                     VALUES
                     (
                         @BotId,
@@ -39,7 +39,6 @@ class ConversationHandler {
                         @ConversationType,
                         @ConversationId,
                         @UserId,
-                        @UserAADId,
                         @UserName,
                         @Email
                     );
@@ -51,7 +50,7 @@ class ConversationHandler {
                 request.input('ConversationType', sql.NVarChar(50), conversationObject.conversation.conversationType);
                 request.input('ConversationId', sql.NVarChar(300), conversationObject.conversation.id);
                 request.input('UserId', sql.NVarChar(300), conversationObject.user.id);
-                request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
+                // request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
                 request.input('UserName', sql.NVarChar(200), conversationObject.user.name);
                 request.input('Email', sql.NVarChar(100), email);
 
@@ -68,12 +67,13 @@ class ConversationHandler {
 
     /**
      *
-     * @param {string} UserAADId Azure aad guid
+     * @param {String} UserEmail Azure AD guid
      * @returns 배열
      */
-    async GetUserConversation(UserAADId) {
+    async GetUserConversation(UserEmail) {
         let returnObject = {
             /**
+             * Conversation 정보
              * @type {ConversationModel}
              */
             data: {},
@@ -88,7 +88,7 @@ class ConversationHandler {
                 SELECT
                     *
                 FROM Conversations
-                WHERE UserAADId = '${UserAADId}'
+                WHERE Email = '${UserEmail}'
             `;
 
             const result = await sql.query(query);
@@ -99,7 +99,7 @@ class ConversationHandler {
                 model.bot.id = userConversation.BotId;
                 model.bot.name = userConversation.BotName;
                 model.user.id = userConversation.UserId;
-                model.user.aadObjectId = userConversation.UserAADId;
+                // model.user.aadObjectId = userConversation.UserAADId;
                 model.user.name = userConversation.UserName;
                 model.conversation.id = userConversation.ConversationId;
                 model.conversation.conversationType = userConversation.ConversationType;
@@ -132,9 +132,8 @@ class ConversationHandler {
                     ConversationId = @ConversationId,
                     UserId = @UserId,
                     UserName = @UserName,
-                    Email = @Email,
                     UpdatedTime = @UpdatedTime
-                WHERE UserAADId = @UserAADId
+                WHERE Email = @Email
             `;
 
             const request = new sql.Request();
@@ -146,7 +145,7 @@ class ConversationHandler {
             request.input('UserName', sql.NVarChar(200), conversationObject.user.name);
             request.input('Email', sql.NVarChar(100), email);
             request.input('UpdatedTime', sql.DateTime, new Date());
-            request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
+            // request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
 
             request.query(query, (err, result) => {
                 console.dir(result)

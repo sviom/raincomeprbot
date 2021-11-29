@@ -57,9 +57,9 @@ server.post("/api/messages", async (req, res) => {
 // const user_id = "57ba0d68-0e3f-44ac-9272-127cb2496043";
 // Listen for incoming notifications and send proactive messages to users.
 server.get('/api/notify', async (req, res) => {
-    const { user_id } = req.query;
+    const { user_email } = req.query;
 
-    if (!user_id) {
+    if (!user_email) {
         res.send("err");
         return;
     }
@@ -67,7 +67,7 @@ server.get('/api/notify', async (req, res) => {
     try {
         // DB에서 conversation 있나 확인
         const handler = new ConversationHandler();
-        const getResult = await handler.GetUserConversation(user_id);
+        const getResult = await handler.GetUserConversation(user_email);
         if (getResult.length > 0) {
             const conversation_id = getResult.data.conversation.id;
             const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
