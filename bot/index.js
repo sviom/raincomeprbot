@@ -108,10 +108,10 @@ server.post('/api/notify', async (req, res) => {
             }
         } catch (error) {
             console.error(error);
+            return res.send(500, { message: JSON.stringify(error) });
         }
     }
-    res.send(200, { message: "No error occurred." });
-    return;
+    return res.send(200, { message: "No error occurred." });;
 });
 
 // Gracefully shutdown HTTP server
