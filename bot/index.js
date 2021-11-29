@@ -89,26 +89,25 @@ server.post('/api/notify', async (req, res) => {
         try {
             const handler = new ConversationHandler();      // DB에서 conversation 있나 확인
             const getResult = await handler.GetUserConversation(reviewerEmail);
-            if (getResult.length == 1) {
-                const conversation_id = getResult.data.conversation.id;
-                const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
-                // const response = await connectorClient.conversations.createConversation(conversationParameters);
+            if (getResult.length !== 1)
+                return res.send(500, { message: `user not found or too many, count = ${getResult.length}` });
 
-                let rawNotificationCard = require("./adaptiveCards/prNotification.json");
-                rawNotificationCard.body[0].text = prTitle;
-                rawNotificationCard.body[1].text = prDescription;
+            const conversation_id = getResult.data.conversation.id;
+            const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
+            // const response = await connectorClient.conversations.createConversation(conversationParameters);
 
-                prLink = prLink.replace("bitbucket.jinhaksa.net", "10.1.4.71");
+            let rawNotificationCard = require("./adaptiveCards/prNotification.json");
+            rawNotificationCard.body[0].text = prTitle;
+            rawNotificationCard.body[1].text = prDescription;
 
-                rawNotificationCard.actions[0].url = prLink;
+            prLink = prLink.replace("bitbucket.jinhaksa.net", "10.1.4.71");
 
-                // conversation_id = response.id 임
-                // MessageFactory.text("PR이 발생했습니다!")
-                const card = bot.renderAdaptiveCard(rawNotificationCard);
-                const result = await connectorClient.conversations.sendToConversation(conversation_id, { attachments: [card] });
-            } else {
-                return res.send(404, { message: 'user not found' });
-            }
+            rawNotificationCard.actions[0].url = prLink;
+
+            // conversation_id = response.id 임
+            // MessageFactory.text("PR이 발생했습니다!")
+            const card = bot.renderAdaptiveCard(rawNotificationCard);
+            const result = await connectorClient.conversations.sendToConversation(conversation_id, { attachments: [card] });
         } catch (error) {
             console.error(error);
             return res.send(500, { message: JSON.stringify(error) });
