@@ -57,7 +57,7 @@ server.post("/api/messages", async (req, res) => {
 // const user_id = "57ba0d68-0e3f-44ac-9272-127cb2496043";
 // Listen for incoming notifications and send proactive messages to users.
 server.post('/api/notify', async (req, res) => {
-    const { user_email } = req.query;
+    // const { user_email } = req.query;
     const rawBody = req.body;
 
     // if (!user_email) {
@@ -67,16 +67,20 @@ server.post('/api/notify', async (req, res) => {
 
     const actorEmail = rawBody.actor ? rawBody.actor.emailAddress : '';
     if (!actorEmail)
-        return;
+        return res.send(404, { message: 'actorEmail not found' });
 
-    const prTitle = rawBody.pullRequest.title;
-    const prDescription = rawBody.pullRequest.description;
-    const reviewers = rawBody.pullRequest.reviewers;
-    const prLink = rawBody.pullRequest.links.self[0].href;
-    const rawNotificationCard = require("./adaptiveCards/prNotification.json");
+    const rawPullRequest = rawBody.pullRequest;
+
+    if (!rawPullRequest)
+        return res.send(404, { message: 'pr not found' });
+
+    const prTitle = rawPullRequest.title;
+    const prDescription = rawPullRequest.description;
+    const reviewers = rawPullRequest.reviewers;
+    const prLink = rawPullRequest.links.self[0].href;
 
     if (!Array.isArray(reviewers))
-        return;
+        return res.send(404, { message: 'No reviewers' });
 
     for (let index = 0; index < reviewers.length; index++) {
         const element = reviewers[index];
@@ -90,6 +94,7 @@ server.post('/api/notify', async (req, res) => {
                 const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
                 // const response = await connectorClient.conversations.createConversation(conversationParameters);
 
+                let rawNotificationCard = require("./adaptiveCards/prNotification.json");
                 rawNotificationCard.body[0].text = prTitle;
                 rawNotificationCard.body[1].text = prDescription;
                 rawNotificationCard.actions[0].url = prLink;
@@ -98,12 +103,14 @@ server.post('/api/notify', async (req, res) => {
                 // MessageFactory.text("PR이 발생했습니다!")
                 const card = bot.renderAdaptiveCard(rawNotificationCard);
                 const result = await connectorClient.conversations.sendToConversation(conversation_id, { attachments: [card] });
+            } else {
+                return res.send(404, { message: 'user not found' });
             }
         } catch (error) {
             console.error(error);
         }
     }
-    res.send("Message sent");
+    res.send(200, { message: "No error occurred." });
     return;
 });
 
