@@ -90,13 +90,13 @@ server.post('/api/notify', async (req, res) => {
                 const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
                 // const response = await connectorClient.conversations.createConversation(conversationParameters);
 
-                const card = bot.renderAdaptiveCard(rawNotificationCard);
-                card.body[0].text = prTitle;
-                card.body[1].text = prDescription;
-                card.actions[0].url = prLink;
+                rawNotificationCard.body[0].text = prTitle;
+                rawNotificationCard.body[1].text = prDescription;
+                rawNotificationCard.actions[0].url = prLink;
 
                 // conversation_id = response.id 임
                 // MessageFactory.text("PR이 발생했습니다!")
+                const card = bot.renderAdaptiveCard(rawNotificationCard);
                 const result = await connectorClient.conversations.sendToConversation(conversation_id, { attachments: [card] });
             }
         } catch (error) {
