@@ -1,51 +1,58 @@
-# How to use this Teams Bots HelloWorld app
+# 팀즈 PR 봇
 
-A bot, chatbot, or conversational bot is an app that responds to simple commands sent in chat and replies in meaningful ways. Examples of bots in everyday use include: bots that notify about build failures, bots that provide information about the weather or bus schedules, or provide travel information. A bot interaction can be a quick question and answer, or it can be a complex conversation. Being a cloud application, a bot can provide valuable and secure access to cloud services and corporate resources.
+해당 봇은 봇과 사람간의 상호작용이 아니라 외부에서 특정 상황이 발생할경우 봇으로 전달, 봇에서 사람으로 전달하기 위한 목적으로 개발되었습니다.
 
-This is a sample bot application demonstrating how to create commands and build adaptive cards that best for automation and notification scenario using `botbuilder` and `adaptivecards-templating`.
+## 준비물
+- Azure 계정
+- 외부에서 접근이 가능한 데이터베이스
+- [NodeJS](https://nodejs.org/en/) 개발지식
+- 마이크로소프트 365(구 오피스365) 계정. [M365 developer program](https://developer.microsoft.com/en-us/microsoft-365/dev-program)
+- [VS Code Teams Tookit익스텐션](https://aka.ms/teams-toolkit)(여기에서 teams-fx cli는 사용하지 않습니다.)
+- Bot Framework에 대한 이해
+- ngrok에 대한 이해(옵션)
+- Adaptive card에 대한 이해(옵션)
+- Graph API에 대한 이해(옵션)
 
-If you are looking for a sample that implements Single Sign On, please refer [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/bot-sso).
-
-## Prerequisites
-
-- [NodeJS](https://nodejs.org/en/)
-- An M365 account. If you do not have M365 account, apply one from [M365 developer program](https://developer.microsoft.com/en-us/microsoft-365/dev-program)
-- [Teams Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version after 1.55 or [TeamsFx CLI](https://aka.ms/teamsfx-cli)
+## 디버깅
+- `F5`를 누르면 자동으로 실행합니다.
+- VS Code의 `실행 및 디버깅`메뉴에서 `실행 및 디버그 우측 초록색 삼각형` 버튼으로도 실행할 수 있습니다.
 
 
-## Debug
+## 간략 순서
+1. VS Code에 Teams Toolkit 설치
+2. 툴킷 메뉴로 이동 - 우측에 Office 365 / Azure에 로그인을 진행
+3. 툴킷을 이용해 앱 생성
+4. [Teams Bot Dev Portal](https://dev.teams.microsoft.com/bots) 접속(기존 Teams app stuio앱은 2022년 1월부로 사용되지 않음)해서 봇이 생성되었나 확인
+5. Azure AD - App registration에 App이 만들어졌나 확인
+    - 필요 시 App에 권한 부여(노티 봇의 경우 사용자 로그인 창을 띄울 수 없으므로 관리자 권한으로 줘야 함)
+6. 봇 구성(개발) 및 테스트
+7. Azure에 Privisioning
+8. Azure에 배포(봇으로 노티를 보내려면 배포해서 endpoint를 알아야함)
+    - Bot Service 및 App service, App service plan이 자동으로 생성됨
+    - 이름을 예쁘게 하고 싶으면 bot에서 미리 이름을 수정
+9. Teams에 배포
+    - Toolkit 옵션에 "조직을 위해 설치", "수동으로 배포"가 있음
+    - 수동으로 배포 시 사용자가 앱 패키지(zip)을 올려서 배포
+    - 관리자가 업데이트할 때도 필요
+10. 팀즈 관리자에서 앱 허용
+11. 팀즈에서 앱 설치
+    - 기존 사용자의 경우 최초에 실행 시 사용자의 액션이 있어야 노티가 가능
 
-- From Visual Studio Code: Start debugging the project by hitting the `F5` key in Visual Studio Code. 
-- Alternatively use the `Run and Debug Activity Panel` in Visual Studio Code and click the `Run and Debug` green arrow button.
-- From TeamsFx CLI: Start debugging the project by executing the command `teamsfx preview --local` in your project directory.
+## Azure에 배포하기(위의 8번)
 
-## Edit the manifest
+- 우측의 툴킷 메뉴을 열고 Accounts 메뉴 및의 Azure에 로그인
+- 로그인 후 계정 아래에서 현재 구독중인 요금제 선택
+- 툴킷 메뉴 Depolyment에서 `Privision in the Cloud` 선택 또는 커맨드 창에서 `Teams: Privision in the cloud` 선택
+- 툴킷 메뉴 Depolyment에서 `Depoly to the cloud` 또는 커맨드 창에서 `Teams: Depoly to the cloud` 선택
+
+> Azure 구독중인 요금제(종량제 등)에 따라 비용이 발생할 수 있습니다.
+
+## Manifest 파일
 
 You can find the Teams manifest in `templates/appPackage/manifest.template.json`. It contains template arguments with `{...}` statements which will be replaced at build time. You may add any extra properties or permissions you require to this file. See the [schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema) for more.
 
-## Deploy to Azure
 
-Deploy your project to Azure by following these steps:
-
-| From Visual Studio Code                                                                                                                                                                                                                                                                                                                                                  | From TeamsFx CLI                                                                                                                                                                                                                    |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <ul><li>Open Teams Toolkit, and sign into Azure by clicking the `Sign in to Azure` under the `ACCOUNTS` section from sidebar.</li> <li>After you signed in, select a subscription under your account.</li><li>Open the Teams Toolkit and click `Provision in the cloud` from DEVELOPMENT section or open the command palette and select: `Teams: Provision in the cloud`.</li><li>Open the Teams Toolkit and click `Deploy to the cloud` or open the command palette and select: `Teams: Deploy to the cloud`.</li></ul> | <ul> <li>Run command `teamsfx account login azure`.</li> <li>Run command `teamsfx account set --subscription <your-subscription-id>`.</li> <li> Run command `teamsfx provision`.</li> <li>Run command: `teamsfx deploy`. </li></ul> |
-
-> Note: Provisioning and deployment may incur charges to your Azure Subscription.
-
-## Preview
-
-Once the provisioning and deployment steps are finished, you can preview your app:
-
-- From Visual Studio Code
-
-  1. Open the `Run and Debug Activity Panel`.
-  1. Select `Launch Remote (Edge)` or `Launch Remote (Chrome)` from the launch configuration drop-down.
-  1. Press the Play (green arrow) button to launch your app - now running remotely from Azure.
-
-- From TeamsFx CLI: execute `teamsfx preview --remote` in your project directory to launch your application.
-
-## Validate manifest file
+## Manifest file이 맞는 지 확인
 
 To check that your manifest file is valid:
 
