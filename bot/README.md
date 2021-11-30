@@ -1,6 +1,7 @@
 # 팀즈 PR 봇
 
 해당 봇은 봇과 사람간의 상호작용이 아니라 외부에서 특정 상황이 발생할경우 봇으로 전달, 봇에서 사람으로 전달하기 위한 목적으로 개발되었습니다. 이 프로젝트에서는 특정 경로로 봇을 호출한 뒤, 전달된 내용 중에 이메일을 이용하여 사용자를 식별하고 해당 사용자에게 메시지를 전달합니다.
+- [더 자세히 설명한 블로그](https://sviom.com)
 
 ## 준비물
 - Azure 계정
@@ -76,4 +77,3 @@ appPackage/manifest.source.json 이 올바른지 확인합니다.
 - [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
 - [Bot Framework Documentation](https://docs.botframework.com/)
 - [Azure Bot Service Introduction](https://docs.microsoft.com/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
-- [더 자세히 설명한 블로그](https://sviom.com)
