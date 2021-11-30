@@ -9,7 +9,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "PR발생 시 알려주는 봇입니다. 만약 알림이 오지 않을 경우, \n \"사용자추가\"라고 입력해주세요. \n 사용자를 등록하는 절차를 다시 실행합니다.",
+            "text": "PR발생 시 알려주는 봇입니다. 만약 알림이 오지 않을 경우, \n \"사용자추가\"라고 입력해주세요. \n 자동으로 사용자를 등록하는 절차를 다시 실행합니다.",
             "wrap": true
         }
     ],
@@ -18,11 +18,6 @@
             "type": "Action.OpenUrl",
             "title": "PR 보러가기",
             "url": "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"
-        },
-        {
-            "type": "Action.OpenUrl",
-            "title": "Teams Toolkit Docs",
-            "url": "https://aka.ms/teamsfx-docs"
         }
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
