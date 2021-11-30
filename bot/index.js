@@ -93,7 +93,8 @@ server.post('/api/notify', async (req, res) => {
                 return res.send(500, { message: `user not found or too many, count = ${getResult.length}` });
 
             const conversation_id = getResult.data.conversation.id;
-            const connectorClient = adapter.createConnectorClient("https://smba.trafficmanager.net/kr/");
+            const service_url = getResult.data.serviceUrl || "https://smba.trafficmanager.net/kr/";
+            const connectorClient = adapter.createConnectorClient(service_url);
             // const response = await connectorClient.conversations.createConversation(conversationParameters);
 
             let rawNotificationCard = require("./adaptiveCards/prNotification.json");

@@ -22,6 +22,7 @@ class ConversationHandler {
                 conversationObject.conversation.conversationType,
                 conversationObject.conversation.id,
                 conversationObject.conversation.tenantId,
+                conversationObject.serviceUrl,
                 conversationObject.user.id,
                 conversationObject.user.aadObjectId,
                 conversationObject.user.name
@@ -31,7 +32,7 @@ class ConversationHandler {
             if (getResult.length <= 0) {
                 let query = `
                     INSERT INTO Conversations
-                    (BotId, BotName, ConversationType, ConversationId, UserId, UserName, Email)
+                    (BotId, BotName, ConversationType, ConversationId, UserId, UserName, Email, ServiceUrl)
                     VALUES
                     (
                         @BotId,
@@ -40,7 +41,8 @@ class ConversationHandler {
                         @ConversationId,
                         @UserId,
                         @UserName,
-                        @Email
+                        @Email,
+                        @ServiceUrl
                     );
                 `;
 
@@ -53,6 +55,7 @@ class ConversationHandler {
                 // request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
                 request.input('UserName', sql.NVarChar(200), conversationObject.user.name);
                 request.input('Email', sql.NVarChar(100), email);
+                request.input('ServiceUrl', sql.NVarChar(300), conversationObject.conversation.serviceUrl);
 
                 request.query(query, (err, result) => {
                     console.dir(result)
@@ -104,6 +107,7 @@ class ConversationHandler {
                 model.conversation.id = userConversation.ConversationId;
                 model.conversation.conversationType = userConversation.ConversationType;
                 model.email = userConversation.Email;
+                model.serviceUrl = userConversation.ServiceUrl;
 
                 returnObject.data = model;
             }
@@ -132,7 +136,8 @@ class ConversationHandler {
                     ConversationId = @ConversationId,
                     UserId = @UserId,
                     UserName = @UserName,
-                    UpdatedTime = @UpdatedTime
+                    UpdatedTime = @UpdatedTime,
+                    ServiceUrl = @ServiceUrl
                 WHERE Email = @Email
             `;
 
@@ -146,6 +151,7 @@ class ConversationHandler {
             request.input('Email', sql.NVarChar(100), email);
             request.input('UpdatedTime', sql.DateTime, new Date());
             // request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
+            request.input('ServiceUrl', sql.NVarChar(300), conversationObject.conversation.serviceUrl);
 
             request.query(query, (err, result) => {
                 console.dir(result)

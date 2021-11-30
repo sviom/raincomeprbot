@@ -26,6 +26,9 @@ class ConversationModel {
             tenantId: ''
         };
 
+        /** 봇이 대답을 어느 곳으로 보낼지 콜백 url */
+        this.serviceUrl = "";
+
         /** 메시지를 보낼 사용자 정보 */
         this.user = {
             /** AAD user guid */
@@ -37,12 +40,13 @@ class ConversationModel {
         };
     }
 
-    setConversationObject(bot_id, bot_name, conv_type, conv_id, conv_tenant_id, user_id, user_object_id, user_name) {
+    setConversationObject(bot_id, bot_name, conv_type, conv_id, conv_tenant_id, service_url, user_id, user_object_id, user_name) {
         this.bot.id = bot_id;
         this.bot.name = bot_name;
         this.conversation.conversationType = conv_type;
         this.conversation.id = conv_id;
         this.conversation.tenantId = conv_tenant_id;
+        this.serviceUrl = service_url;
         this.user.id = user_id;
         this.user.aadObjectId = user_object_id;
         this.user.name = user_name;
