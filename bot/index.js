@@ -45,6 +45,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log(`\nBot started, ${server.name} listening to ${server.url}`);
 });
 server.use(restify.plugins.queryParser());      // query string 자동 파서
+server.use(restify.plugins.jsonBodyParser());   // Request - Content-type 이 application/json일 경우 자동으로 파싱
 
 // Listen for incoming requests.
 server.post("/api/messages", async (req, res) => {
