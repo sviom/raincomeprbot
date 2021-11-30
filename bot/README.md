@@ -49,29 +49,29 @@
 
 ## Manifest 파일
 
-You can find the Teams manifest in `templates/appPackage/manifest.template.json`. It contains template arguments with `{...}` statements which will be replaced at build time. You may add any extra properties or permissions you require to this file. See the [schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema) for more.
+디렉터리 안에서 `templates/appPackage/manifest.template.json` 파일을 찾을 수 있는데, 중괄호(`{...}`)로 되어있는 부분들은 빌드 시 자동으로 대체 됩니다. 권한이나 여러 다른 내용들을 추가할 수 있는데, 자세한 내용은 문서 [schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema)를 참고하세요.
 
 
 ## Manifest file이 맞는 지 확인
 
-To check that your manifest file is valid:
+appPackage/manifest.source.json 이 올바른지 확인합니다.
 
-- From Visual Studio Code: open the Teams Toolkit and click `Validate manifest file` or open the command palette and select: `Teams: Validate manifest file`.
-- From TeamsFx CLI: run command `teamsfx validate` in your project directory.
+- 툴킷 메뉴의 `Validate manifest file` 또는 커맨드창의 `Teams: Validate manifest file` 클릭합니다.
 
-## Build
+## 앱 패키지 압축파일 만들기 = 빌드
 
-- From Visual Studio Code: open the Teams Toolkit and click `Zip Teams metadata package` or open the command palette and select `Teams: Zip Teams metadata package`.
-- Alternatively, from the command line run `teamsfx build` in the project directory.
+- 툴킷메뉴의 `Zip Teams metadata package`을 클릭합니다.
+- `appPackage` 프로젝트 디렉터리에 압축파일이 생성됩니다.
 
-## Publish to Teams
+## 팀즈에 배포
 
-Once deployed, you may want to distribute your application to your organization's internal app store in Teams. Your app will be submitted for admin approval.
+배포(제출)한 후에는 관리자의 승인을 거친 후 Teams 앱 스토어에서 설치할 수 있습니다. 관리자 승인은 팀즈 관리자 포털에서 가능합니다.
 
-- From Visual Studio Code: open the Teams Toolkit and click `Publish to Teams` or open the command palette and select: `Teams: Publish to Teams`.
-- From TeamsFx CLI: run command `teamsfx publish` in your project directory.
+- 툴킷메뉴의 `Publish to Teams` 선택
+- `Install for organizaion` 자동으로 팀즈 관리자 포털로 제출됨
+- `Manually submit Teasm app package file` 앱패키지 압축 파일이 생성, 팀즈 관리자가 관리포털에서 수동으로 업로드하여 배포할 수 있습니다.
 
-## Further reading
+## 더 읽어보면 좋을 것들
 
 - [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
 - [Bot Framework Documentation](https://docs.botframework.com/)
