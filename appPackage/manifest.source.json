@@ -3,12 +3,12 @@
     "manifestVersion": "1.11",
     "version": "1.0.2",
     "id": "{appid}",
-    "packageName": "com.microsoft.teams.extension",
+    "packageName": "com.microsoft.teams.raincomeprbot",
     "developer": {
         "name": "Raincome Dev Team",
-        "websiteUrl": "{baseUrl}",
-        "privacyUrl": "{baseUrl}/index.html#/privacy",
-        "termsOfUseUrl": "{baseUrl}/index.html#/termsofuse"
+        "websiteUrl": "https://sviom.com/",
+        "privacyUrl": "https://sviom.com/",
+        "termsOfUseUrl": "https://sviom.com/"
     },
     "icons": {
         "color": "color.png",
