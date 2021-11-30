@@ -11,7 +11,7 @@ class ConversationHandler {
      * @param {Object} conversationObject conversation 정보 통째로
      * @param {String} email 사용자 이메일 정보
      */
-    async InsertConversation(conversationObject, email = null) {
+    async UpsertConversation(conversationObject, email = null) {
         try {
             await sql.connect(connection_string);
 

@@ -123,7 +123,7 @@ class ProactiveBot extends ActivityHandler {
         });
 
         const handler = new ConversationHandler();
-        await handler.InsertConversation(conversationReference);
+        await handler.UpsertConversation(conversationReference);
     }
 }
 module.exports.ProactiveBot = ProactiveBot;
