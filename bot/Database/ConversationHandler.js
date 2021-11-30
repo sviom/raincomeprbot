@@ -151,7 +151,7 @@ class ConversationHandler {
             request.input('Email', sql.NVarChar(100), email);
             request.input('UpdatedTime', sql.DateTime, new Date());
             // request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
-            request.input('ServiceUrl', sql.NVarChar(300), conversationObject.conversation.serviceUrl);
+            request.input('ServiceUrl', sql.NVarChar(300), conversationObject.serviceUrl);
 
             request.query(query, (err, result) => {
                 console.dir(result)
