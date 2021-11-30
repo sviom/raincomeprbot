@@ -69,10 +69,11 @@ appPackage/manifest.source.json 이 올바른지 확인합니다.
 
 - 툴킷메뉴의 `Publish to Teams` 선택
 - `Install for organizaion` 자동으로 팀즈 관리자 포털로 제출됨
-- `Manually submit Teasm app package file` 앱패키지 압축 파일이 생성, 팀즈 관리자가 관리포털에서 수동으로 업로드하여 배포할 수 있습니다.
+- `Manually submit Teasm app package file` 앱패키지 압축 파일이 생성되고, 해당 파일을 관리자에게 전달하여 관리자가 관리포털에서 수동으로 업로드하여 배포할 수 있습니다.
 
 ## 더 읽어보면 좋을 것들
 
 - [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
 - [Bot Framework Documentation](https://docs.botframework.com/)
 - [Azure Bot Service Introduction](https://docs.microsoft.com/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
+- [더 자세히 설명한 블로그](https://sviom.com)
