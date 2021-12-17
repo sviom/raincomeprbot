@@ -1,6 +1,6 @@
 const sql = require('mssql');
+const KeyVaultHelper = require("../Helper/AzureKeyVaultHelper");
 const ConversationModel = require('../Models/ConversationModel');
-const connection_string = 'Server=tcp:todaylunch.database.windows.net,1433;Initial Catalog=riaincome_noti_bot;Persist Security Info=False;User ID=lunchadmin;Password=0vnrvjwuTek!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;';
 
 /**
  * Conversation 을 DB에 저장하는 핸들러
@@ -13,6 +13,7 @@ class ConversationHandler {
      */
     async UpsertConversation(conversationObject, email = null) {
         try {
+            const connection_string = await KeyVaultHelper.GetKeyVaultSecret();
             await sql.connect(connection_string);
 
             var conversationModel = new ConversationModel(email);
@@ -85,6 +86,7 @@ class ConversationHandler {
         }
 
         try {
+            const connection_string = await KeyVaultHelper.GetKeyVaultSecret();
             await sql.connect(connection_string);
 
             let query = `
@@ -125,6 +127,7 @@ class ConversationHandler {
      */
     async UpdatetUserConversation(conversationObject, email = null) {
         try {
+            const connection_string = await KeyVaultHelper.GetKeyVaultSecret();
             await sql.connect(connection_string);
 
             let query = `
