@@ -6,19 +6,22 @@ const vaultName = "todaylunchkeyvault";
 const url = `https://${vaultName}.vault.azure.net`;
 dotenv.config();        // env파일은 루트에
 
-/**
+class AzureKeyVaultHelper {
+    /**
  * test22
  * @param {*} secretName
  */
-async function GetKeyVaultSecret(secretName = 'RaincomePrConnectionString') {
-    const credential = new DefaultAzureCredential();
-    const client = new SecretClient(url, credential);
-    const latestSecret = await client.getSecret(secretName);
-    console.log(`Latest version of the secret ${secretName}: `, latestSecret);
-    // const specificSecret = await client.getSecret(secretName, { version: latestSecret.properties.version! });
-    // console.log(`The secret ${secretName} at the version ${latestSecret.properties.version!}: `, specificSecret);
-    return '';
+    async GetKeyVaultSecret(secretName = 'RaincomePrConnectionString') {
+        const credential = new DefaultAzureCredential();
+        const client = new SecretClient(url, credential);
+        const latestSecret = await client.getSecret(secretName);
+        console.log(`Latest version of the secret ${secretName}: `, latestSecret);
+        // const specificSecret = await client.getSecret(secretName, { version: latestSecret.properties.version! });
+        // console.log(`The secret ${secretName} at the version ${latestSecret.properties.version!}: `, specificSecret);
+        return '';
+    }
 }
+
 
 
 async function main() {
@@ -53,7 +56,4 @@ async function main() {
     await client.beginDeleteSecret(secretName);
 }
 
-export {
-    /** test */
-    GetKeyVaultSecret
-}
+module.exports = AzureKeyVaultHelper;

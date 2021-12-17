@@ -13,7 +13,8 @@ class ConversationHandler {
      */
     async UpsertConversation(conversationObject, email = null) {
         try {
-            const connection_string = await KeyVaultHelper.GetKeyVaultSecret();
+            const helper = new KeyVaultHelper();
+            const connection_string = await helper.GetKeyVaultSecret();
             await sql.connect(connection_string);
 
             var conversationModel = new ConversationModel(email);
@@ -86,7 +87,8 @@ class ConversationHandler {
         }
 
         try {
-            const connection_string = await KeyVaultHelper.GetKeyVaultSecret();
+            const helper = new KeyVaultHelper();
+            const connection_string = await helper.GetKeyVaultSecret();
             await sql.connect(connection_string);
 
             let query = `
@@ -127,7 +129,8 @@ class ConversationHandler {
      */
     async UpdatetUserConversation(conversationObject, email = null) {
         try {
-            const connection_string = await KeyVaultHelper.GetKeyVaultSecret();
+            const helper = new KeyVaultHelper();
+            const connection_string = await helper.GetKeyVaultSecret();
             await sql.connect(connection_string);
 
             let query = `
