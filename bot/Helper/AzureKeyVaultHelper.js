@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 
 const vaultName = "todaylunchkeyvault";
 const url = `https://${vaultName}.vault.azure.net`;
-dotenv.config({ path: '/bot/azure.env' });
+dotenv.config();        // env파일은 루트에
 
 
 async function GetKeyVaultSecret(secretName = 'RaincomePrConnectionString') {

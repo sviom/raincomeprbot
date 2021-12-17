@@ -2,17 +2,17 @@
     "eventKey": "pr:merged",
     "date": "2021-01-19T11:36:19+0900",
     "actor": {
-        "name": "hanbyulkang",
-        "emailAddress": "hanbyulkang@jinhak.com",
+        "name": "h",
+        "emailAddress": "emailAddress",
         "id": 276,
-        "displayName": "강 한별",
+        "displayName": "강",
         "active": true,
-        "slug": "hanbyulkang",
+        "slug": "h",
         "type": "NORMAL",
         "links": {
             "self": [
                 {
-                    "href": "http://bitbucket.jinhaksa.net:7990/users/hanbyulkang"
+                    "href": "http://bitbucket/users/h"
                 }
             ]
         }
@@ -42,16 +42,16 @@
                 "statusMessage": "Available",
                 "forkable": true,
                 "project": {
-                    "key": "CATCH",
+                    "key": "c",
                     "id": 10,
-                    "name": "catch",
-                    "description": "catch.co.kr 관련 프로젝트",
+                    "name": "c",
+                    "description": "c.co.kr 관련 프로젝트",
                     "public": false,
                     "type": "NORMAL",
                     "links": {
                         "self": [
                             {
-                                "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH"
+                                "href": "http://bitbucket/projects/c"
                             }
                         ]
                     }
@@ -60,17 +60,17 @@
                 "links": {
                     "clone": [
                         {
-                            "href": "http://bitbucket.jinhaksa.net:7990/scm/catch/pullrequesttest.git",
+                            "href": "http://bitbucket/scm/c/pullrequesttest.git",
                             "name": "http"
                         },
                         {
-                            "href": "ssh://git@bitbucket.jinhaksa.net:7999/catch/pullrequesttest.git",
+                            "href": "ssh://git@bitbucke/c/pullrequesttest.git",
                             "name": "ssh"
                         }
                     ],
                     "self": [
                         {
-                            "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH/repos/pullrequesttest/browse"
+                            "href": "http://bitbucket/projects/c/repos/pullrequesttest/browse"
                         }
                     ]
                 }
@@ -90,16 +90,16 @@
                 "statusMessage": "Available",
                 "forkable": true,
                 "project": {
-                    "key": "CATCH",
+                    "key": "C",
                     "id": 10,
-                    "name": "catch",
-                    "description": "catch.co.kr 관련 프로젝트",
+                    "name": "c",
+                    "description": "c관련 프로젝트",
                     "public": false,
                     "type": "NORMAL",
                     "links": {
                         "self": [
                             {
-                                "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH"
+                                "href": "http://bitbucket/projects/C"
                             }
                         ]
                     }
@@ -108,17 +108,17 @@
                 "links": {
                     "clone": [
                         {
-                            "href": "http://bitbucket.jinhaksa.net:7990/scm/catch/pullrequesttest.git",
+                            "href": "http://bitbucket/scm//pullrequesttest.git",
                             "name": "http"
                         },
                         {
-                            "href": "ssh://git@bitbucket.jinhaksa.net:7999/catch/pullrequesttest.git",
+                            "href": "ssh://git@bitbucket./pullrequesttest.git",
                             "name": "ssh"
                         }
                     ],
                     "self": [
                         {
-                            "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH/repos/pullrequesttest/browse"
+                            "href": "http://bitbucket/projects/c/repos/pullrequesttest/browse"
                         }
                     ]
                 }
@@ -127,17 +127,17 @@
         "locked": false,
         "author": {
             "user": {
-                "name": "hanbyulkang",
-                "emailAddress": "hanbyulkang@jinhak.com",
+                "name": "h",
+                "emailAddress": "h@ji.om",
                 "id": 276,
-                "displayName": "강 한별",
+                "displayName": "fddd",
                 "active": true,
-                "slug": "hanbyulkang",
+                "slug": "h",
                 "type": "NORMAL",
                 "links": {
                     "self": [
                         {
-                            "href": "http://bitbucket.jinhaksa.net:7990/users/hanbyulkang"
+                            "href": "http://bitbucket/users/h"
                         }
                     ]
                 }
@@ -149,17 +149,17 @@
         "reviewers": [
             {
                 "user": {
-                    "name": "yuhee",
-                    "emailAddress": "yuhee@jinhak.com",
+                    "name": "yh",
+                    "emailAddress": "yh@ji.com",
                     "id": 4,
-                    "displayName": "이 유희",
+                    "displayName": "이희",
                     "active": true,
                     "slug": "yuhee",
                     "type": "NORMAL",
                     "links": {
                         "self": [
                             {
-                                "href": "http://bitbucket.jinhaksa.net:7990/users/yuhee"
+                                "href": "http://bitbucket/users/"
                             }
                         ]
                     }
@@ -171,17 +171,17 @@
             },
             {
                 "user": {
-                    "name": "bmpark",
-                    "emailAddress": "bmpark@jinhak.com",
+                    "name": "bm",
+                    "emailAddress": "bk@ji.com",
                     "id": 214,
                     "displayName": "박 범민",
                     "active": true,
-                    "slug": "bmpark",
+                    "slug": "b",
                     "type": "NORMAL",
                     "links": {
                         "self": [
                             {
-                                "href": "http://bitbucket.jinhaksa.net:7990/users/bmpark"
+                                "href": "http://bitbucket/users/bm"
                             }
                         ]
                     }
@@ -202,7 +202,7 @@
         "links": {
             "self": [
                 {
-                    "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH/repos/pullrequest_test/pull-requests/4"
+                    "href": "http://bitbucket/projects/C/repos/pullrequest_test/pull-requests/4"
                 }
             ]
         }

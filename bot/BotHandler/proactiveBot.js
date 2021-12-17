@@ -92,7 +92,8 @@ class ProactiveBot extends ActivityHandler {
     }
 
     async SendNotificationToUsersAsync(context) {
-        const member = await TeamsInfo.getMember(context, "57ba0d68-0e3f-44ac-9272-127cb2496043");
+        const sample_user_id = process.env["SAMPLE_USER_ID"];
+        const member = await TeamsInfo.getMember(context, sample_user_id);
         const ref = TurnContext.getConversationReference(context.activity);
         ref.user = member;
         await context.adapter.createConversation(ref, async (context) => {
@@ -118,9 +119,9 @@ class ProactiveBot extends ActivityHandler {
         if (!this.conversationReferences[userId])
             this.conversationReferences[userId] = conversationReference;
 
-        fs.writeFile(`./converstaion_${userId}.txt`, JSON.stringify(conversationReference), (error) => {
-            console.log("error : ", error);
-        });
+        // fs.writeFile(`./converstaion_${userId}.txt`, JSON.stringify(conversationReference), (error) => {
+        //     console.log("error : ", error);
+        // });
 
         const handler = new ConversationHandler();
         await handler.UpsertConversation(conversationReference);

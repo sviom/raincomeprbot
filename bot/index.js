@@ -54,8 +54,6 @@ server.post("/api/messages", async (req, res) => {
     });
 });
 
-// const tenant_id = "2f73c339-0881-4953-93ec-9379c837f5a3";
-// const user_id = "57ba0d68-0e3f-44ac-9272-127cb2496043";
 // Listen for incoming notifications and send proactive messages to users.
 server.post('/api/notify', async (req, res) => {
     // const { user_email } = req.query;

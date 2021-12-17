@@ -1,9 +1,8 @@
 const axios = require('axios');
 class ProactiveAppIntallationHelper {
     async GetAccessToken(MicrosoftTenantId) {
-        const app_id = "20343e66-49b0-4955-9d26-b3ab1255d26d";          // process.env.MicrosoftAppId,
-        const app_pw = "E0N7Q~jEgZNdVLW~ZhHOu95tQaCA_9xw.UWcF";         // process.env.MicrosoftAppPassword
-
+        const app_id = process.env["AZURE_CLIENT_ID"];
+        const app_pw = process.env["AZURE_CLIENT_SECRET"];
 
         let qs = require('qs')
         const data = qs.stringify({
@@ -115,10 +114,11 @@ class ProactiveAppIntallationHelper {
     async GetUserConversation(MicrosoftTenantId, UserId) {
         return new Promise(async (resolve) => {
             let accessToken = await this.GetAccessToken(MicrosoftTenantId);
+            const app_id = process.env["AZURE_CLIENT_ID"];
 
             const data = {
                 "bot": {
-                    "id": "20343e66-49b0-4955-9d26-b3ab1255d26d",
+                    "id": app_id,
                     "name": "raincomeprbot"
                 },
                 "isGroup": false,

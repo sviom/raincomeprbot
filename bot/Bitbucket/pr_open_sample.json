@@ -2,17 +2,17 @@
     "eventKey": "repo:refschanged",
     "date": "2021-01-19T11:35:29+0900",
     "actor": {
-        "name": "hanbyulkang",
-        "emailAddress": "hanbyulkang@jinhak.com",
+        "name": "h",
+        "emailAddress": "h@jinhak.com",
         "id": 276,
         "displayName": "강 한별",
         "active": true,
-        "slug": "hanbyulkang",
+        "slug": "h",
         "type": "NORMAL",
         "links": {
             "self": [
                 {
-                    "href": "http://bitbucket.jinhaksa.net:7990/users/hanbyulkang"
+                    "href": "http://bitbucket.ji.net:7990/users/h"
                 }
             ]
         }
@@ -27,16 +27,16 @@
         "statusMessage": "Available",
         "forkable": true,
         "project": {
-            "key": "CATCH",
+            "key": "c",
             "id": 10,
-            "name": "catch",
-            "description": "catch.co.kr 관련 프로젝트",
+            "name": "c",
+            "description": "c.co.kr 관련 프로젝트",
             "public": false,
             "type": "NORMAL",
             "links": {
                 "self": [
                     {
-                        "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH"
+                        "href": "http://bitbucket.ji.net:7990/projects/c"
                     }
                 ]
             }
@@ -45,17 +45,17 @@
         "links": {
             "clone": [
                 {
-                    "href": "http://bitbucket.jinhaksa.net:7990/scm/catch/pullrequesttest.git",
+                    "href": "http://bitbucket.ji.net:7990/scm/c/pullrequesttest.git",
                     "name": "http"
                 },
                 {
-                    "href": "ssh://git@bitbucket.jinhaksa.net:7999/catch/pullrequesttest.git",
+                    "href": "ssh://git@bitbucket.ji.net:7999/c/pullrequesttest.git",
                     "name": "ssh"
                 }
             ],
             "self": [
                 {
-                    "href": "http://bitbucket.jinhaksa.net:7990/projects/CATCH/repos/pullrequesttest/browse"
+                    "href": "http://bitbucket.ji.net:7990/projects/c/repos/pullrequesttest/browse"
                 }
             ]
         }
