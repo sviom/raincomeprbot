@@ -100,7 +100,7 @@ server.post('/api/notify', async (req, res) => {
             rawNotificationCard.body[0].text = prTitle;
             rawNotificationCard.body[1].text = prDescription;
 
-            prLink = prLink.replace("bitbucket.jinhaksa.net", "10.1.4.71");
+            prLink = prLink.replace("bitbucket.jisa.net", "10.1.4.71");
 
             rawNotificationCard.actions[0].url = prLink;
 
