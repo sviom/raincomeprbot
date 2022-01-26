@@ -48,7 +48,7 @@ class ProactiveBot extends ActivityHandler {
             // 아무 텍스트나 들어와도 안내메시지 보내기 및 Conversation Update
             const card = this.renderAdaptiveCard(rawLearnCard);
             await context.sendActivity({ attachments: [card] });
-            await this.addConversationReference(context.activity);
+            await this.addConversationReference(context.activity, text);
         });
 
         this.onInstallationUpdate(async (context, next) => {
@@ -113,7 +113,7 @@ class ProactiveBot extends ActivityHandler {
         return card;
     }
 
-    async addConversationReference(activity) {
+    async addConversationReference(activity, text) {
         const conversationReference = TurnContext.getConversationReference(activity);
         const userId = conversationReference.user.aadObjectId;
         if (!this.conversationReferences[userId])
@@ -124,7 +124,7 @@ class ProactiveBot extends ActivityHandler {
         // });
 
         const handler = new ConversationHandler();
-        await handler.UpsertConversation(conversationReference);
+        await handler.UpsertConversation(conversationReference, text);
     }
 }
 module.exports.ProactiveBot = ProactiveBot;

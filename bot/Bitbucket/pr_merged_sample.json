@@ -3,7 +3,7 @@
     "date": "2021-01-19T11:36:19+0900",
     "actor": {
         "name": "h",
-        "emailAddress": "emailAddress",
+        "emailAddress": "kanghanstar@raincome.net",
         "id": 276,
         "displayName": "강",
         "active": true,
@@ -128,7 +128,7 @@
         "author": {
             "user": {
                 "name": "h",
-                "emailAddress": "h@ji.om",
+                "emailAddress": "kanghanstar@raincome.net",
                 "id": 276,
                 "displayName": "fddd",
                 "active": true,
@@ -150,7 +150,7 @@
             {
                 "user": {
                     "name": "yh",
-                    "emailAddress": "yh@ji.com",
+                    "emailAddress": "kanghanstar@raincome.net",
                     "id": 4,
                     "displayName": "이희",
                     "active": true,
@@ -172,7 +172,7 @@
             {
                 "user": {
                     "name": "bm",
-                    "emailAddress": "bk@ji.com",
+                    "emailAddress": "kanghanstar@raincome.net",
                     "id": 214,
                     "displayName": "박 범민",
                     "active": true,
