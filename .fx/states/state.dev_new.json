@@ -1,0 +1,43 @@
+{
+    "solution": {
+        "provisionSucceeded": true,
+        "needCreateResourceGroup": true,
+        "resourceNameSuffix": "560e48",
+        "resourceGroupName": "RaincomePrBotGroup",
+        "tenantId": "2f73c339-0881-4953-93ec-9379c837f5a3",
+        "subscriptionId": "22f7a208-4e4f-438a-8ca1-31cb1cc9334f",
+        "subscriptionName": "default_credit_subscription",
+        "location": "Korea Central",
+        "teamsAppTenantId": "2f73c339-0881-4953-93ec-9379c837f5a3"
+    },
+    "fx-resource-identity": {
+        "identityName": "raincomeprdevn7d4db2",
+        "identityResourceId": "/subscriptions/22f7a208-4e4f-438a-8ca1-31cb1cc9334f/resourceGroups/RaincomePrBotGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/raincomeprdevn7d4db2",
+        "identityClientId": "dca38941-a5bd-4082-90d4-723ec68bcec4"
+    },
+    "fx-resource-bot": {
+        "botId": "e91fc3fe-0c55-4843-9c26-9b68d356582c",
+        "objectId": "3ce981b7-aa26-4ced-8363-0972196d5e81",
+        "skuName": "F1",
+        "siteName": "raincomeprdevn7d4db2bot",
+        "validDomain": "raincomeprdevn7d4db2bot.azurewebsites.net",
+        "appServicePlanName": "raincomeprdevn7d4db2bot",
+        "botWebAppResourceId": "/subscriptions/22f7a208-4e4f-438a-8ca1-31cb1cc9334f/resourceGroups/RaincomePrBotGroup/providers/Microsoft.Web/sites/raincomeprdevn7d4db2bot",
+        "siteEndpoint": "https://raincomeprdevn7d4db2bot.azurewebsites.net",
+        "botPassword": "{{fx-resource-bot.botPassword}}"
+    },
+    "fx-resource-aad-app-for-teams": {
+        "clientId": "cbe7dc66-ca47-479c-a8c6-453d59760c1c",
+        "objectId": "fd36d938-940d-49d2-bd39-07d81d6448ba",
+        "oauth2PermissionScopeId": "e884d84f-5bdb-43fd-8692-6789077421f1",
+        "tenantId": "2f73c339-0881-4953-93ec-9379c837f5a3",
+        "oauthHost": "https://login.microsoftonline.com",
+        "oauthAuthority": "https://login.microsoftonline.com/2f73c339-0881-4953-93ec-9379c837f5a3",
+        "applicationIdUris": "api://botid-e91fc3fe-0c55-4843-9c26-9b68d356582c",
+        "clientSecret": "{{fx-resource-aad-app-for-teams.clientSecret}}"
+    },
+    "fx-resource-appstudio": {
+        "teamsAppId": "8c99d682-670e-49ba-b09a-19e65a89e085",
+        "teamsAppUpdatedAt": 1643156400870
+    }
+}

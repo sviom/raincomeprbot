@@ -1,6 +1,6 @@
 {
     "solution": {
-        "teamsAppTenantId": "{{solution.teamsAppTenantId}}",
+        "teamsAppTenantId": "2f73c339-0881-4953-93ec-9379c837f5a3",
         "resourceNameSuffix": "1897c3",
         "resourceGroupName": "raincomeprbot-rg",
         "tenantId": "2f73c339-0881-4953-93ec-9379c837f5a3",
@@ -13,11 +13,11 @@
         "oauthHost": "https://login.microsoftonline.com",
         "oauthAuthority": "https://login.microsoftonline.com/2f73c339-0881-4953-93ec-9379c837f5a3",
         "clientId": "e8b25bae-66c6-4475-bffe-b9ed5e7da2fc",
-        "clientSecret": "{{fx-resource-aad-app-for-teams.clientSecret}}",
         "objectId": "de9092db-d1cb-4cdb-8c89-305c25508de4",
         "oauth2PermissionScopeId": "e6a70db5-a166-4a97-b80d-ee062705d650",
         "tenantId": "2f73c339-0881-4953-93ec-9379c837f5a3",
-        "applicationIdUris": "api://botid-46b0ff8b-34b7-4582-b849-eba64be0ef81"
+        "applicationIdUris": "api://botid-46b0ff8b-34b7-4582-b849-eba64be0ef81",
+        "clientSecret": ""
     },
     "fx-resource-appstudio": {
         "teamsAppId": "01050a0a-c3b1-422d-8f3f-746c719a38d8"
