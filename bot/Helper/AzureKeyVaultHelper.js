@@ -18,7 +18,7 @@ class AzureKeyVaultHelper {
         console.log(`Latest version of the secret ${secretName}: `, latestSecret);
         // const specificSecret = await client.getSecret(secretName, { version: latestSecret.properties.version! });
         // console.log(`The secret ${secretName} at the version ${latestSecret.properties.version!}: `, specificSecret);
-        return '';
+        return latestSecret;
     }
 }
 
