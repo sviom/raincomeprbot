@@ -24,7 +24,8 @@
         "dotenv": "^10.0.0",
         "isomorphic-fetch": "^3.0.0",
         "mssql": "^7.3.0",
-        "restify": "~8.5.1"
+        "restify": "~8.5.1",
+        "restify-await-promise": "^2.2.0"
     },
     "devDependencies": {
         "ngrok": "^3.4.0",

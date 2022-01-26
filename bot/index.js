@@ -2,6 +2,7 @@
 
 // Import required packages
 const restify = require("restify");
+const restifyPromise = require('restify-await-promise');
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
@@ -55,7 +56,7 @@ server.post("/api/messages", async (req, res) => {
 });
 
 // Listen for incoming notifications and send proactive messages to users.
-server.post('/api/notify', async (req, res) => {
+server.post('/api/notify', async function (req, res, next) {
     // const { user_email } = req.query;
     const rawBody = req.body;
 
@@ -87,7 +88,7 @@ server.post('/api/notify', async (req, res) => {
 
         try {
             const handler = new ConversationHandler();      // DB에서 conversation 있나 확인
-            const getResult = await handler.GetUserConversation(reviewerEmail);
+            const getResult = await handler.GetUserConversation(null, reviewerEmail);
             if (getResult.length !== 1)
                 return res.send(500, { message: `user not found or too many, count = ${getResult.length}` });
 
@@ -113,7 +114,7 @@ server.post('/api/notify', async (req, res) => {
             return res.send(500, { message: JSON.stringify(error) });
         }
     }
-    return res.send(200, { message: "No error occurred." });;
+    return res.send(200, { message: "No error occurred." });
 });
 
 // Gracefully shutdown HTTP server
