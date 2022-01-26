@@ -15,7 +15,7 @@ class ConversationHandler {
         try {
             const helper = new KeyVaultHelper();
             const connection_string = await helper.GetKeyVaultSecret();
-            await sql.connect(connection_string);
+            let pool = await sql.connect(connection_string);
 
             var conversationModel = new ConversationModel(email);
             conversationModel.setConversationObject(
@@ -49,22 +49,19 @@ class ConversationHandler {
                     );
                 `;
 
-                const request = new sql.Request();
-                request.input('BotId', sql.NVarChar(300), conversationObject.bot.id);
-                request.input('BotName', sql.NVarChar(100), conversationObject.bot.name);
-                request.input('ConversationType', sql.NVarChar(50), conversationObject.conversation.conversationType);
-                request.input('ConversationId', sql.NVarChar(300), conversationObject.conversation.id);
-                request.input('UserId', sql.NVarChar(300), conversationObject.user.id);
-                request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
-                request.input('UserName', sql.NVarChar(200), conversationObject.user.name);
-                request.input('Email', sql.NVarChar(100), email);
-                request.input('ServiceUrl', sql.NVarChar(300), conversationObject.conversation.serviceUrl);
 
-                request.query(query, (err, result) => {
-                    console.dir(result)
-                });
+                let result = await pool.request()
+                    .input('BotId', sql.NVarChar(300), conversationObject.bot.id)
+                    .input('BotName', sql.NVarChar(100), conversationObject.bot.name)
+                    .input('ConversationType', sql.NVarChar(50), conversationObject.conversation.conversationType)
+                    .input('ConversationId', sql.NVarChar(300), conversationObject.conversation.id)
+                    .input('UserId', sql.NVarChar(300), conversationObject.user.id)
+                    .input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId)
+                    .input('UserName', sql.NVarChar(200), conversationObject.user.name)
+                    .input('Email', sql.NVarChar(100), email)
+                    .input('ServiceUrl', sql.NVarChar(300), conversationObject.conversation.serviceUrl)
+                    .query(query);
             } else {
-                console.log("ddd");
                 await this.UpdatetUserConversation(conversationModel, email);
             }
         } catch (err) {
@@ -92,38 +89,44 @@ class ConversationHandler {
             const helper = new KeyVaultHelper();
             const connection_string = await helper.GetKeyVaultSecret();
             // await sql.connect(connection_string);
-            sql.connect(connection_string).then(() => {
-                let query = `
+            let pool = await sql.connect(connection_string);
+            let query = `
                 SELECT
                     *
                 FROM Conversations
                 WHERE UserAADId = @UserAAdId OR Email = @Email
             `;
 
-                const request = new sql.Request();
-                request.input('UserAADId', sql.UniqueIdentifier, UserAAdId);
-                request.input('Email', sql.NVarChar(100), Email);
-                request.query(query, (err, result) => {
-                    // console.dir(result)
-                    const queryResult = result.recordset;
-                    if (queryResult.length > 0) {
-                        const userConversation = queryResult[0];
-                        let model = new ConversationModel();
-                        model.bot.id = userConversation.BotId;
-                        model.bot.name = userConversation.BotName;
-                        model.user.id = userConversation.UserId;
-                        model.user.aadObjectId = userConversation.UserAADId;
-                        model.user.name = userConversation.UserName;
-                        model.conversation.id = userConversation.ConversationId;
-                        model.conversation.conversationType = userConversation.ConversationType;
-                        model.email = userConversation.Email;
-                        model.serviceUrl = userConversation.ServiceUrl;
+            // const request = new sql.Request();
+            // request.input('UserAADId', sql.UniqueIdentifier, UserAAdId);
+            // request.input('Email', sql.NVarChar(100), Email);
 
-                        returnObject.data = model;
-                    }
-                    returnObject.length = queryResult.length;
-                });
-            });
+            let result = await pool.request()
+                .input('UserAADId', sql.UniqueIdentifier, UserAAdId)
+                .input('Email', sql.NVarChar(100), Email)
+                .query(query)
+
+            console.dir(result);
+            const queryResult = result.recordset;
+            if (queryResult.length > 0) {
+                const userConversation = queryResult[0];
+                let model = new ConversationModel();
+                model.bot.id = userConversation.BotId;
+                model.bot.name = userConversation.BotName;
+                model.user.id = userConversation.UserId;
+                model.user.aadObjectId = userConversation.UserAADId;
+                model.user.name = userConversation.UserName;
+                model.conversation.id = userConversation.ConversationId;
+                model.conversation.conversationType = userConversation.ConversationType;
+                model.email = userConversation.Email;
+                model.serviceUrl = userConversation.ServiceUrl;
+
+                returnObject.data = model;
+            }
+            returnObject.length = queryResult.length;
+            // request.query(query, (err, result) => {
+
+            // });
         } catch (err) {
             // ... error checks
             console.error(err);
@@ -139,7 +142,7 @@ class ConversationHandler {
         try {
             const helper = new KeyVaultHelper();
             const connection_string = await helper.GetKeyVaultSecret();
-            await sql.connect(connection_string);
+            let pool = await sql.connect(connection_string);
 
             let query = `
                 UPDATE Conversations
@@ -156,21 +159,19 @@ class ConversationHandler {
                 WHERE UserAADId = @UserAADId
             `;
 
-            const request = new sql.Request();
-            request.input('BotId', sql.NVarChar(300), conversationObject.bot.id);
-            request.input('BotName', sql.NVarChar(100), conversationObject.bot.name);
-            request.input('ConversationType', sql.NVarChar(50), conversationObject.conversation.conversationType);
-            request.input('ConversationId', sql.NVarChar(300), conversationObject.conversation.id);
-            request.input('UserId', sql.NVarChar(300), conversationObject.user.id);
-            request.input('UserName', sql.NVarChar(200), conversationObject.user.name);
-            request.input('Email', sql.NVarChar(100), email);
-            request.input('UpdatedTime', sql.DateTime, new Date());
-            request.input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId);
-            request.input('ServiceUrl', sql.NVarChar(300), conversationObject.serviceUrl);
+            let result = await pool.request()
+                .input('BotId', sql.NVarChar(300), conversationObject.bot.id)
+                .input('BotName', sql.NVarChar(100), conversationObject.bot.name)
+                .input('ConversationType', sql.NVarChar(50), conversationObject.conversation.conversationType)
+                .input('ConversationId', sql.NVarChar(300), conversationObject.conversation.id)
+                .input('UserId', sql.NVarChar(300), conversationObject.user.id)
+                .input('UserName', sql.NVarChar(200), conversationObject.user.name)
+                .input('Email', sql.NVarChar(100), email)
+                .input('UpdatedTime', sql.DateTime, new Date())
+                .input('UserAADId', sql.UniqueIdentifier, conversationObject.user.aadObjectId)
+                .input('ServiceUrl', sql.NVarChar(300), conversationObject.serviceUrl)
+                .query(query);
 
-            request.query(query, (err, result) => {
-                console.dir(result)
-            });
         } catch (err) {
             console.error("update error : ", err);
         }
