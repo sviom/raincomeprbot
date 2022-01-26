@@ -42,9 +42,9 @@ const bot = new ProactiveBot(conversationReferences);
 
 // Create HTTP server.
 const server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-    console.log(`\nBot started, ${server.name} listening to ${server.url}`);
-});
+
+restifyPromise.install(server); // Options is not required
+
 server.use(restify.plugins.queryParser());      // query string 자동 파서
 server.use(restify.plugins.jsonBodyParser());   // Request - Content-type 이 application/json일 경우 자동으로 파싱
 
@@ -106,15 +106,20 @@ server.post('/api/notify', async function (req, res, next) {
             rawNotificationCard.actions[0].url = prLink;
 
             // conversation_id = response.id 임
-            // MessageFactory.text("PR이 발생했습니다!")
+            // let etest = MessageFactory.text("PR이 발생했습니다!")
             const card = bot.renderAdaptiveCard(rawNotificationCard);
-            const result = await connectorClient.conversations.sendToConversation(conversation_id, { attachments: [card] });
+            let attachCard = MessageFactory.attachment(card)
+            const result = await connectorClient.conversations.sendToConversation(conversation_id, attachCard);//  { attachments: [card] });
         } catch (error) {
             console.error(error);
             return res.send(500, { message: JSON.stringify(error) });
         }
     }
     return res.send(200, { message: "No error occurred." });
+});
+
+server.listen(process.env.port || process.env.PORT || 3978, function () {
+    console.log(`\nBot started, ${server.name} listening to ${server.url}`);
 });
 
 // Gracefully shutdown HTTP server
