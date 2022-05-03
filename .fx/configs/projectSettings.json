@@ -19,5 +19,10 @@
     },
     "version": "2.0.0",
     "isFromSample": false,
-    "programmingLanguage": "javascript"
+    "programmingLanguage": "javascript",
+    "pluginSettings": {
+        "fx-resource-bot": {
+            "capabilities": []
+        }
+    }
 }

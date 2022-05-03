@@ -1,7 +1,7 @@
 {
     "solution": {
         "provisionSucceeded": true,
-        "needCreateResourceGroup": true,
+        "needCreateResourceGroup": false,
         "resourceNameSuffix": "560e48",
         "resourceGroupName": "RaincomePrBotGroup",
         "tenantId": "2f73c339-0881-4953-93ec-9379c837f5a3",
@@ -38,6 +38,7 @@
     },
     "fx-resource-appstudio": {
         "teamsAppId": "8c99d682-670e-49ba-b09a-19e65a89e085",
-        "teamsAppUpdatedAt": 1643156400870
+        "teamsAppUpdatedAt": 1651573391379,
+        "tenantId": "2f73c339-0881-4953-93ec-9379c837f5a3"
     }
 }
